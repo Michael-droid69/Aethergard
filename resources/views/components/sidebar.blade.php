@@ -147,7 +147,7 @@
         </div>
         <div class="text-center">
             <h1 class="font-extrabold tracking-widest text-lg"
-                style="color: #f5e6b0; letter-spacing: 0.2em; font-family: 'Palatino Linotype', Palatino, serif;">GUILD HALL</h1>
+                style="color: #f5e6b0; letter-spacing: 0.2em; font-family: 'Palatino Linotype', Palatino, serif;">AETHERGARD</h1>
             <p class="text-xs tracking-widest mt-0.5"
                style="color: #c4901a; letter-spacing: 0.25em; font-style: italic;">ROYAL ARCHIVE</p>
         </div>

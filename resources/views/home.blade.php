@@ -27,53 +27,8 @@
                 </div>
             </div>
 
-            <!-- MAP SECTION -->
-            <div class="relative rounded-2xl overflow-hidden mb-8 shadow-2xl" style="height: 340px; border: 2px solid #c4a35a;">
-                <!-- Map background - parchment/world map style -->
-                <div class="absolute inset-0" style="background: linear-gradient(135deg, #8b6914 0%, #c4941a 20%, #a07820 40%, #7a5c10 60%, #9c7a1c 80%, #6b4e10 100%);">
-                    <!-- Map texture overlay -->
-                    <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'400\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'400\' height=\'400\' filter=\'url(%23noise)\' opacity=\'0.08\'/%3E%3C/svg%3E'); opacity: 0.5;"></div>
-                    <!-- Continents SVG approximation -->
-                    <svg class="absolute inset-0 w-full h-full" viewBox="0 0 900 340" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Europe/Africa -->
-                        <path d="M380 60 Q400 50 420 55 Q440 60 445 80 Q450 100 440 120 Q430 150 420 180 Q410 210 415 240 Q420 270 410 290 Q400 310 390 295 Q380 280 375 260 Q370 230 365 200 Q360 170 365 140 Q370 100 375 80 Z" fill="#6b4e0a" opacity="0.7"/>
-                        <!-- Americas -->
-                        <path d="M200 40 Q230 30 250 45 Q270 60 265 90 Q260 120 255 150 Q250 180 240 210 Q230 240 220 260 Q210 280 200 265 Q185 245 180 220 Q175 190 178 160 Q182 130 190 100 Q196 70 200 40 Z" fill="#6b4e0a" opacity="0.6"/>
-                        <!-- Asia -->
-                        <path d="M500 30 Q560 20 620 35 Q680 50 700 80 Q715 110 700 140 Q685 165 660 175 Q630 185 600 175 Q565 162 540 140 Q515 115 505 90 Q496 60 500 30 Z" fill="#6b4e0a" opacity="0.65"/>
-                        <!-- Ley lines - glowing circles -->
-                        <circle cx="580" cy="180" r="70" fill="none" stroke="#ffd700" stroke-width="1.5" opacity="0.5"/>
-                        <circle cx="580" cy="180" r="110" fill="none" stroke="#ffd700" stroke-width="1" opacity="0.35"/>
-                        <circle cx="580" cy="180" r="150" fill="none" stroke="#ffd700" stroke-width="0.8" opacity="0.25"/>
-                        <!-- Ley lines radiating -->
-                        <line x1="580" y1="180" x2="200" y2="100" stroke="#ffd700" stroke-width="1" opacity="0.3"/>
-                        <line x1="580" y1="180" x2="800" y2="60" stroke="#ffd700" stroke-width="1" opacity="0.3"/>
-                        <line x1="580" y1="180" x2="750" y2="300" stroke="#ffd700" stroke-width="1" opacity="0.3"/>
-                        <line x1="580" y1="180" x2="400" y2="280" stroke="#ffd700" stroke-width="1" opacity="0.3"/>
-                        <!-- Red dot marker -->
-                        <circle cx="650" cy="175" r="6" fill="#cc2222"/>
-                        <circle cx="650" cy="175" r="10" fill="none" stroke="#cc2222" stroke-width="1.5" opacity="0.6"/>
-                    </svg>
-                </div>
+           @include('partials.map-section')
 
-                <!-- Info card overlay (top-left) -->
-                <div class="absolute top-5 left-5 rounded-lg p-4 shadow-xl" style="background: rgba(220, 200, 150, 0.88); border: 1px solid #b8963c; max-width: 240px; backdrop-filter: blur(2px);">
-                    <h3 class="font-bold text-base mb-1" style="color: #2c1a0e; font-family: 'Palatino Linotype', Palatino, serif;">Aethelgard Ley-Lines</h3>
-                    <p class="text-xs italic mb-2" style="color: #4a3520; line-height: 1.5;">
-                        Magic flows are heavy near the Whispering Peaks today. Equipment wear may increase by 14%.
-                    </p>
-                    <div class="flex items-center gap-2">
-                        <svg class="w-4 h-4" style="color: #6b8c6b;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
-                        <span class="text-xs font-semibold" style="color: #2c4a2c;">Mana Density: Optimal</span>
-                    </div>
-                </div>
-
-                <!-- Expand Chart button -->
-                <button class="absolute bottom-4 right-4 flex items-center gap-2 px-4 py-2 rounded text-sm font-bold tracking-wider transition hover:opacity-90" style="background: rgba(30,18,6,0.75); color: #d4a82a; border: 1px solid #c4a35a; font-family: inherit; letter-spacing: 0.1em;">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-                    EXPAND CHART
-                </button>
-            </div>
 
             <!-- BOTTOM ROW: Quests + Active Borrowings -->
             <div class="grid grid-cols-3 gap-6">
