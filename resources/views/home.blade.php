@@ -114,63 +114,46 @@
                     </div>
                 </div>
 
-                <!-- Active Borrowings (1/3 width) -->
-                <div class="col-span-1">
-                    <div class="flex items-center gap-2 mb-4">
-                        <svg class="w-5 h-5" style="color: #4a3520;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
-                        <span class="font-bold text-base" style="color: #2c1a0e; font-family: 'Palatino Linotype', Palatino, serif;">Active Borrowings</span>
-                    </div>
+               @forelse($activeBorrowings as $borrowing)
+    <div class="flex items-center gap-3 p-3 mx-3 mt-2 rounded-lg cursor-pointer hover:opacity-80 transition"
+         style="background: rgba(210,185,120,0.5); border: 1px solid rgba(180,150,60,0.4);"
+         onclick="showBorrowingModal({{ $borrowing->id }})">
 
-                    <div class="rounded-xl overflow-hidden shadow-xl" style="background: linear-gradient(160deg, #d4b86a 0%, #c4a84a 30%, #a8d4b8 70%, #90c8a8 100%); border: 2px solid #b89a3a;">
+        {{-- Icon --}}
+        <div class="w-10 h-10 rounded flex items-center justify-center flex-shrink-0"
+             style="background: rgba(180,140,40,0.4);">
+            <svg class="w-5 h-5" style="color: #c4a030;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+        </div>
 
-                        <!-- Borrowing Item 1: Sun-Forged Claymore -->
-                        <div class="flex items-center gap-3 p-3 mx-3 mt-3 rounded-lg" style="background: rgba(210, 185, 120, 0.5); border: 1px solid rgba(180,150,60,0.4);">
-                            <div class="w-10 h-10 rounded flex items-center justify-center flex-shrink-0" style="background: rgba(180,140,40,0.4);">
-                                <svg class="w-5 h-5" style="color: #c4a030;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.121 14.121L19 19m-7-7l7-7m-7 7l-2.879 2.879M12 12L9.121 9.121m0 5.758a3 3 0 10-4.243-4.243 3 3 0 004.243 4.243z"/></svg>
-                            </div>
-                            <div class="flex-1 min-w-0">
-                                <div class="font-bold text-xs mb-0.5" style="color: #2c1a0e; font-family: 'Palatino Linotype', Palatino, serif;">Sun-Forged Claymore</div>
-                                <div class="text-xs" style="color: #4a3520;">
-                                    <span>DURABILITY: 88%</span>
-                                    <span class="mx-1">·</span>
-                                    <span>ENCHANTMENT: GRADE II</span>
-                                </div>
-                            </div>
-                            <div class="text-right flex-shrink-0">
-                                <div class="text-xs font-bold uppercase" style="color: #cc2222; font-size: 9px; letter-spacing: 0.05em;">DUE DATE</div>
-                                <div class="font-bold" style="color: #cc2222; font-size: 11px;">3 Sunsets</div>
-                            </div>
-                        </div>
+        {{-- Details --}}
+        <div class="flex-1 min-w-0">
+            <div class="font-bold text-xs mb-0.5 truncate"
+                 style="color: #2c1a0e; font-family: 'Palatino Linotype', Palatino, serif;">
+                {{ $borrowing->equipment->name }}
+            </div>
+            <div class="text-xs" style="color: #4a3520;">
+                {{ $borrowing->equipment->type ?? 'Equipment' }}
+            </div>
+        </div>
 
-                        <!-- Borrowing Item 2: Griffin-Scale Mail -->
-                        <div class="flex items-center gap-3 p-3 mx-3 mt-2 rounded-lg" style="background: rgba(210, 185, 120, 0.5); border: 1px solid rgba(180,150,60,0.4);">
-                            <div class="w-10 h-10 rounded flex items-center justify-center flex-shrink-0" style="background: rgba(180,140,40,0.4);">
-                                <svg class="w-5 h-5" style="color: #c4a030;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                            </div>
-                            <div class="flex-1 min-w-0">
-                                <div class="font-bold text-xs mb-0.5" style="color: #2c1a0e; font-family: 'Palatino Linotype', Palatino, serif;">Griffin-Scale Mail</div>
-                                <div class="text-xs" style="color: #4a3520;">
-                                    <span>DURABILITY: 62%</span>
-                                    <span class="mx-1">·</span>
-                                    <span>RESIST: FIRE/FROST</span>
-                                </div>
-                            </div>
-                            <div class="text-right flex-shrink-0">
-                                <div class="text-xs font-bold uppercase" style="color: #cc2222; font-size: 9px; letter-spacing: 0.05em;">DUE DATE</div>
-                                <div class="font-bold" style="color: #cc2222; font-size: 11px;">1 Sunset</div>
-                            </div>
-                        </div>
-
-                        <!-- Footer: REQUEST EXTENSION + plus button -->
-                        <div class="flex items-center mt-3" style="border-top: 1px solid rgba(180,150,60,0.3);">
-                            <button class="flex-1 py-3 font-bold text-sm tracking-widest transition hover:opacity-80" style="color: #2c1a0e; font-family: 'Palatino Linotype', Palatino, serif; letter-spacing: 0.15em; background: transparent;">
-                                REQUEST EXTENSION
-                            </button>
-                            <button class="w-12 h-12 flex items-center justify-center text-xl font-bold rounded-br-xl transition hover:opacity-80" style="background: #2c1a0e; color: #d4a82a;">
-                                +
-                            </button>
-                        </div>
-
+        {{-- Due date --}}
+        <div class="text-right flex-shrink-0">
+            <div class="text-xs font-bold uppercase"
+                 style="color: {{ $borrowing->isOverdue() ? '#cc2222' : '#cc8822' }}; font-size: 9px; letter-spacing: 0.05em;">
+                {{ $borrowing->isOverdue() ? 'OVERDUE' : 'DUE DATE' }}
+            </div>
+            <div class="font-bold" style="color: {{ $borrowing->isOverdue() ? '#cc2222' : '#cc8822' }}; font-size: 11px;">
+                {{ $borrowing->daysLeft() }} {{ Str::plural('Sunset', $borrowing->daysLeft()) }}
+            </div>
+        </div>
+    </div>
+@empty
+    <div class="p-4 mx-3 text-center text-xs italic" style="color: #8a6a40;">
+        No active borrowings...
+    </div>
+@endforelse
                     </div>
                 </div>
 
@@ -189,4 +172,88 @@
         </div>
 
     </main>
+    {{-- Borrowing Detail Modal --}}
+<div id="borrowingModal" class="fixed inset-0 z-50 hidden items-center justify-center"
+     style="background: rgba(10,5,2,0.85);"
+     onclick="if(event.target===this) closeBorrowingModal()">
+
+    <div class="rounded-2xl shadow-2xl p-6 w-80 relative"
+         style="background: linear-gradient(145deg, #2a0d04, #3d1a08); border: 2px solid #c4a35a;">
+
+        <button onclick="closeBorrowingModal()"
+                class="absolute top-3 right-4 text-lg font-bold transition hover:opacity-60"
+                style="color: #d4a82a;">✕</button>
+
+        <h3 class="font-bold text-lg mb-1" id="modal-item-name"
+            style="color: #f5e6b0; font-family: 'Palatino Linotype', Palatino, serif;"></h3>
+        <p class="text-xs mb-4" id="modal-item-type" style="color: #c4901a; font-style: italic;"></p>
+
+        <div class="space-y-2 mb-5">
+            <div class="flex justify-between text-xs" style="color: #d4b870;">
+                <span>Borrowed on</span>
+                <span id="modal-borrowed-at" class="font-semibold"></span>
+            </div>
+            <div class="flex justify-between text-xs" style="color: #d4b870;">
+                <span>Due date</span>
+                <span id="modal-due-date" class="font-semibold"></span>
+            </div>
+            <div class="flex justify-between text-xs" style="color: #d4b870;">
+                <span>Days remaining</span>
+                <span id="modal-days-left" class="font-semibold"></span>
+            </div>
+        </div>
+
+        <div class="flex gap-3">
+            {{-- Return --}}
+            <form id="modal-return-form" method="POST" class="flex-1">
+                @csrf
+                <button type="submit"
+                        class="w-full py-2 rounded-lg font-bold text-xs transition hover:opacity-80"
+                        style="background: #3d1205; border: 1px solid #c4a35a; color: #f5e6b0; font-family: 'Palatino Linotype', Palatino, serif;">
+                    Return Item
+                </button>
+            </form>
+
+            {{-- Extend --}}
+            <form id="modal-extend-form" method="POST" class="flex-1">
+                @csrf
+                <button type="submit"
+                        class="w-full py-2 rounded-lg font-bold text-xs transition hover:opacity-80"
+                        style="background: linear-gradient(135deg, #c4901a, #f0c842); color: #2a0d04; font-family: 'Palatino Linotype', Palatino, serif;">
+                    +3 Days
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function showBorrowingModal(borrowingId) {
+    fetch(`/borrowings/${borrowingId}`)
+        .then(r => r.json())
+        .then(data => {
+            document.getElementById('modal-item-name').textContent  = data.item_name;
+            document.getElementById('modal-item-type').textContent  = data.item_type;
+            document.getElementById('modal-borrowed-at').textContent = data.borrowed_at;
+            document.getElementById('modal-due-date').textContent   = data.due_date;
+            document.getElementById('modal-days-left').textContent  =
+                data.is_overdue ? 'OVERDUE' : `${data.days_left} days`;
+
+            document.getElementById('modal-return-form').action =
+                `/borrowings/${borrowingId}/return`;
+            document.getElementById('modal-extend-form').action =
+                `/borrowings/${borrowingId}/extend`;
+
+            const modal = document.getElementById('borrowingModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        });
+}
+
+function closeBorrowingModal() {
+    const modal = document.getElementById('borrowingModal');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+}
+</script>
 </x-app-layout>

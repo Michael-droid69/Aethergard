@@ -2,34 +2,80 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EquipmentController;
+use App\Http\Controllers\BorrowingController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth']);
-Route::get('/equipment', [App\Http\Controllers\EquipmentController::class, 'index'])
-    ->middleware(['auth']);
-Route::get('/equipment', [EquipmentController::class, 'index'])->middleware(['auth']);
-Route::get('/equipment/{category}', [EquipmentController::class, 'category'])->middleware(['auth']);
-Route::get('/home', function () {
-    return view('home');
-})->middleware(['auth']);
-Route::get('/companions', function () {
-    return view('companions.index');
-})->middleware(['auth']);
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+| All routes that belong to the public part of the site are defined here.
+| Auth‑protected routes are wrapped in a middleware group.
+*/
 
+/* -----------------------------------------------------------------
+ *  PUBLIC ROUTES
+ * ----------------------------------------------------------------- */
+Route::get('/', fn () => view('welcome'));
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
+/* -----------------------------------------------------------------
+ *  AUTH‑PROTECTED ROUTES
+ * ----------------------------------------------------------------- */
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    /* ---- Dashboard ------------------------------------------------ */
+    // “verified” is added only here, because the original file used it.
+    Route::get('/dashboard', fn () => view('dashboard'))
+        ->middleware('verified')
+        ->name('dashboard');
+
+    /* ---- Home (list of active borrowings) ------------------------ */
+    Route::get('/home', function () {
+        $activeBorrowings = auth()->user()
+            ->activeBorrowings()
+            ->with('equipment')
+            ->get();
+
+        return view('home', compact('activeBorrowings'));
+    })->name('home');
+
+    /* ---- Equipment ------------------------------------------------ */
+    Route::get('/equipment', [EquipmentController::class, 'index'])
+        ->name('equipment.index');
+
+    Route::get('/equipment/{category}', [EquipmentController::class, 'category'])
+        ->name('equipment.category');
+
+    /* ---- Borrowing actions ---------------------------------------- */
+    Route::post('/borrow/{equipment}', [BorrowingController::class, 'borrow'])
+        ->name('borrow');
+
+    Route::post('/borrowings/{borrowing}/return', [BorrowingController::class, 'return'])
+        ->name('borrowing.return');
+
+    Route::post('/borrowings/{borrowing}/extend', [BorrowingController::class, 'extend'])
+        ->name('borrowing.extend');
+
+    Route::get('/borrowings/{borrowing}', [BorrowingController::class, 'show'])
+        ->name('borrowing.show');
+
+    /* ---- Profile -------------------------------------------------- */
+    Route::get('/profile', [ProfileController::class, 'edit'])
+        ->name('profile.edit');
+
+    Route::patch('/profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
+
+    Route::delete('/profile', [ProfileController::class, 'destroy'])
+        ->name('profile.destroy');
+
+    /* ---- Companions (example static page) ----------------------- */
+    Route::get('/companions', fn () => view('companions.index'))
+        ->name('companions.index');
 });
 
+/* -----------------------------------------------------------------
+ *  AUTH ROUTES (Laravel Breeze / Jetstream / Fortify, etc.)
+ * ----------------------------------------------------------------- */
 require __DIR__.'/auth.php';
